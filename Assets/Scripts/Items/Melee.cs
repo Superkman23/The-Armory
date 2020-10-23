@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Sword : Item
+public class Melee : Item
 {
   public float _SwingForce;
   public float _DegreeOffset;
