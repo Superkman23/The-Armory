@@ -5,8 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
   Rigidbody2D _Rigid;
-  [SerializeField] float _MoveSpeed;
-  [SerializeField] float _Acceleration;
+  [SerializeField] float _WalkSpeed;
+  [SerializeField] float _WalkAcceleration;
+  [SerializeField] float _SprintAcceleration;
+  [SerializeField] float _SprintSpeed;
 
 
   private void Awake()
@@ -18,16 +20,15 @@ public class Player : MonoBehaviour
     ApplyMovement();
   }
 
-
   private void ApplyMovement()
   {
     Vector2 input = GetInput().normalized;
-    Vector2 targetVelocity = input * _MoveSpeed;
-    Vector2 velocityChange = targetVelocity - _Rigid.velocity;
-    float acceleration = _Acceleration * Time.deltaTime;
-    velocityChange.x = Mathf.Clamp(velocityChange.x, -acceleration, acceleration);
-    velocityChange.y = Mathf.Clamp(velocityChange.y, -acceleration, acceleration);
-    _Rigid.velocity += velocityChange;
+    input *= Input.GetKey(KeyCode.LeftShift) ? _SprintSpeed : _WalkSpeed;
+    input -= _Rigid.velocity;
+    float acceleration = Input.GetKey(KeyCode.LeftShift) ? _SprintAcceleration * Time.deltaTime : _WalkAcceleration * Time.deltaTime;
+    input.x = Mathf.Clamp(input.x, -acceleration, acceleration);
+    input.y = Mathf.Clamp(input.y, -acceleration, acceleration);
+    _Rigid.velocity += input;
   }
 
 
