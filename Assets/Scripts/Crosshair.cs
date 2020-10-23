@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Crosshair : MonoBehaviour
 {
-  SpriteRenderer _Renderer;
   [SerializeField] float _RotateSpeed;
   private void Update()
   {

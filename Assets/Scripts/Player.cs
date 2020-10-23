@@ -12,8 +12,8 @@ public class Player : MonoBehaviour
   [SerializeField] float _SprintSpeed;
 
   [Header("Items")]
-  [SerializeField] public Crosshair _Crosshair;
-  [SerializeField] public Item _EquippedItem;
+  public Crosshair _Crosshair;
+  public Item _EquippedItem;
 
   private void Awake()
   {
@@ -48,7 +48,14 @@ public class Player : MonoBehaviour
     _Rigid.velocity += input;
   }
 
-
+  public void AddForce(Vector2 force)
+  {
+    _Rigid.velocity += force;
+  }
+  public void SetForce(Vector2 force)
+  {
+    _Rigid.velocity = force;
+  }
 
   Vector2 GetInput()
   {

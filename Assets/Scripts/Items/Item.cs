@@ -8,22 +8,27 @@ public class Item : MonoBehaviour
   //TODO: make equipper not a player but a generic object that player inherits from
   public Player _Equipper = null;
   public float _MaxDistance = 2;
-  public void Use()
-  {
 
+  public virtual void Use()
+  {
+    //Intentionally left blank
   }
 
-  public void FixedUpdate()
+  protected void FixedUpdate()
   {
     if (_IsEquipped)
     {
-      transform.right = (_Equipper._Crosshair.transform.position - _Equipper.transform.position).normalized;
-      float distance = Vector2.Distance(_Equipper.transform.position,_Equipper._Crosshair.transform.position);
-      distance = Mathf.Clamp(distance, 0, _MaxDistance);
-      transform.localPosition = transform.right * distance;
+      transform.localPosition = EquippedPosition();
     }
   }
 
+  protected virtual Vector2 EquippedPosition()
+  {
+    transform.right = (_Equipper._Crosshair.transform.position - _Equipper.transform.position).normalized;
+    float distance = Vector2.Distance(_Equipper.transform.position, _Equipper._Crosshair.transform.position);
+    distance = Mathf.Clamp(distance, 0, _MaxDistance);
+    return transform.right * distance;
+  }
 
   public void Equip(Player equipper)
   {
