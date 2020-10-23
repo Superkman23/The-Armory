@@ -7,7 +7,9 @@ public class CameraController : MonoBehaviour
   Camera _Camera;
 
   [SerializeField] Transform _TargetPosition;
+  [SerializeField] Transform _CrosshairPosition;
   [SerializeField] [Range(0, 1)] float _LerpSpeed;
+  [SerializeField] [Range(0, 0.5f)] float _CrosshairRatio;
 
   private void Awake()
   {
@@ -15,9 +17,10 @@ public class CameraController : MonoBehaviour
   }
   private void FixedUpdate()
   {
-    Vector3 targetPos = Vector3.Lerp(transform.position, _TargetPosition.position, _LerpSpeed);
-    targetPos.z = transform.position.z;
-    transform.position = targetPos;
+    Vector3 targetPos = Vector3.Lerp(_TargetPosition.position, _CrosshairPosition.position, _CrosshairRatio);
+    Vector3 newPos = Vector3.Lerp(transform.position, targetPos, _LerpSpeed);
+    newPos.z = transform.position.z;
+    transform.position = newPos;
   }
 
 
