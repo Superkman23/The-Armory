@@ -5,16 +5,33 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
   Rigidbody2D _Rigid;
+  [Header("Movement")]
   [SerializeField] float _WalkSpeed;
   [SerializeField] float _WalkAcceleration;
   [SerializeField] float _SprintAcceleration;
   [SerializeField] float _SprintSpeed;
 
+  [Header("Items")]
+  [SerializeField] public Crosshair _Crosshair;
+  [SerializeField] public Item _EquippedItem;
 
   private void Awake()
   {
+    //TODO: move to the function where an item is actually picked up
+    _EquippedItem.Equip(this);
+
     _Rigid = GetComponent<Rigidbody2D>();
   }
+
+  private void Update()
+  {
+    if (Input.GetMouseButtonDown(0))
+    {
+      _EquippedItem.Use();
+    }
+  }
+
+
   private void FixedUpdate()
   {
     ApplyMovement();
